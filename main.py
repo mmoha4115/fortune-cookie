@@ -16,14 +16,30 @@
 #
 import webapp2
 import random
+def getrandomfortune():
+    #list of possible fortunes
+    fortunes = [
+        "I see much code in your future",
+        "consider eating more fortune cookies",
+    "You have tamed the mighty Python, now you must free it onto the Great Spider's Web!"
+    ]
+
+    #select random fortune
+    index=random.randint(0,2)
+    return fortunes[index]
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         header='<h1>Fortune Cookie</h1>'
-        lucky_number= random.randint(1,100)
-        number_sentence= 'your lucky number:' + str(lucky_number)
+        lucky_number= "<strong>" + str(random.randint(1,100)) + "</strong>"
+        fortune= "<strong>" + getrandomfortune() + "</strong>"
+        fortune_sentence= "your fortune: " + fortune
+        fortune_paragraph= "<p>" + fortune_sentence + "</p>"
+        number_sentence= 'your lucky number:' + lucky_number
         number_paragraph= '<p>' + number_sentence + '</p>'
-        self.response.write(header + number_paragraph)
+        cookie_again_button= "<a href='.'><button>Another cookie please!</button></a>"
+        content= header + fortune_paragraph + number_paragraph + cookie_again_button
+        self.response.write(content)
 
 
 app = webapp2.WSGIApplication([
