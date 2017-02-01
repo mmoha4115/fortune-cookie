@@ -15,11 +15,22 @@
 # limitations under the License.
 #
 import webapp2
+import random
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello world!')
+        header='<h1>Fortune Cookie</h1>'
+        lucky_number= random.randint(1,100)
+        number_sentence= 'your lucky number:' + str(lucky_number)
+        number_paragraph= '<p>' + number_sentence + '</p>'
+        self.response.write(header + number_paragraph)
 
-app = webapp2.WSGIApplication([
-    ('/', MainHandler)
-], debug=True)
+class LoginHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write("Thanks for trying to login")
+
+routes= [
+    ('/', MainHandler),
+    ('/login',LoginHandler)
+]
+app = webapp2.WSGIApplication(routes, debug=True)
